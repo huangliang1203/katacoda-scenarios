@@ -10,7 +10,9 @@ After it has successfully run, add the bin folder to your path.
 
 `export PATH="$PATH:/root/istio-1.3.0/bin"`{{execute}}
 
-`cd /root/istio-1.3.0/bin"`{{execute}}
+`istioctl verify-install`{{execute}}
+
+`cd /root/istio-1.3.0`{{execute}}
 
 ## Install with Helm via helm template
 Choose this option if your cluster doesn’t have Tiller deployed and you don’t want to install it.
@@ -31,6 +33,10 @@ Verify that all 23 Istio CRDs were committed to the Kubernetes api-server using 
 Install the Istio CNI components:
 
 `helm template install/kubernetes/helm/istio-cni --name=istio-cni --namespace=kube-system | kubectl apply -f -`{{execute}}
+
+Make sure Istio CNI demonset is installed in the namespace kube-system 
+
+`kubectl get ds -n kube-system | grep istio-cni-node`{{execute}}
 
 Enable CNI in Istio by setting --set istio_cni.enabled=true in addition to the settings for your chosen profile. For example, to configure the default profile:
 

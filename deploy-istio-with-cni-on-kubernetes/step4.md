@@ -1,8 +1,27 @@
-To showcase Istio, a BookInfo web application has been created. This sample deploys a simple application composed of four separate microservices which will be used to demonstrate various features of the Istio service mesh.
+## Deploy your application
 
-When deploying an application that will be extended via Istio, the Kubernetes YAML definitions are extended via _kube-inject_. This will configure the services proxy sidecar (Envoy), Mixers, Certificates and Init Containers.
+`kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml`{{execute}}
 
-`kubectl apply -f <(istioctl kube-inject -f istio/bookinfo/bookinfo.yaml)`{{execute}}
+checkout out the service
+
+`kubectl get svc`{{execute}}
+
+```
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+details       ClusterIP   10.110.194.143   <none>        9080/TCP   6s
+kubernetes    ClusterIP   10.96.0.1        <none>        443/TCP    16m
+productpage   ClusterIP   10.101.169.36    <none>        9080/TCP   5s
+ratings       ClusterIP   10.97.117.42     <none>        9080/TCP   6s
+reviews       ClusterIP   10.96.28.85      <none>        9080/TCP   5s
+```
+
+transform the service to service mesh one by one
+
+`istioctl experimental  add-to-mesh service details`{{execute}}
+`istioctl experimental  add-to-mesh service productpage`{{execute}}
+`istioctl experimental  add-to-mesh service ratings`{{execute}}
+`istioctl experimental  add-to-mesh service reviews`{{execute}}
+
 
 ## Check Status
 

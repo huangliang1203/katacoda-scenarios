@@ -2,13 +2,21 @@ Istio is installed in two parts. The first part involves the CLI tooling that wi
 
 ## Install CLI tooling
 
-The following command will install the Istio 0.7.1 release.
+The following command will install the Istio 1.3.0 release.
 
-`curl -L http://assets.joinscrapbook.com/istio/getLatestIstio | sh -`{{execute}}
+`curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.3.0 sh -`{{execute}}
 
 After it has successfully run, add the bin folder to your path.
 
-`export PATH="$PATH:/root/istio-0.7.1/bin"`{{execute}}
+`export PATH="$PATH:/root/istio-1.3.0/bin"`{{execute}}
+
+`cd /root/istio-1.3.0/bin"`{{execute}}
+
+## Configure Istio CRD
+Install all the Istio Custom Resource Definitions (CRDs) using kubectl apply, and wait a few seconds for the CRDs to be committed in the Kubernetes API-server:
+
+`helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -`{{execute}}
+
 
 ## Configure Istio
 
@@ -23,3 +31,10 @@ This will deploy Pilot, Mixer, Ingress-Controller, and Egress-Controller, and th
 All the services are deployed as Pods. Once they're running, Istio is correctly deployed.
 
 `kubectl get pods -n istio-system`{{execute}}
+
+## Deploy Katacoda Service
+To make the sample BookInfo application and dashboards available to the outside world, in particular, on Katacoda, deploy the following Yaml
+
+`kubectl apply -f /root/katacoda.yaml`{{execute}}
+
+Without this, the bookInfo example and other dashboards will not be available.

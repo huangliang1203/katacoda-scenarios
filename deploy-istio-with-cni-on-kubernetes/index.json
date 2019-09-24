@@ -20,10 +20,6 @@
             },
             {
                 "title": "Istio Architecture",
-                "text": "step2a.md"
-            },
-            {
-                "title": "Deploy Istio Metrics and Tracing",
                 "text": "step3.md"
             },
             {
