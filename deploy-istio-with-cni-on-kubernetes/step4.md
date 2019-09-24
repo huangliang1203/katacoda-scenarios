@@ -15,6 +15,9 @@ ratings       ClusterIP   10.97.117.42     <none>        9080/TCP   6s
 reviews       ClusterIP   10.96.28.85      <none>        9080/TCP   5s
 ```
 
+
+`kubectl  taint node master node-role.kubernetes.io/master-`{{execute}}
+
 transform the service to service mesh one by one
 
 `istioctl experimental  add-to-mesh service details`{{execute}}
